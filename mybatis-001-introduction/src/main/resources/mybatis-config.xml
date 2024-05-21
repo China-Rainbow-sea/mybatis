@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--    开启mybatis 对标准日志的实现-->
+<!--    如果导入的第三方框架的日志，没有下面这个 settings 也是可以的-->
+<!--    <settings>-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING"/>-->
+<!--    </settings>-->
+    <environments default="development">
+        <environment id="development">
+<!--            MANAGED 没有用第三框架管理的话，都是会被提交的，没有事务上的管理了。-->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+                <property name="username" value="root"/>
+                <property name="password" value="MySQL123"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+
+        <!--sql映射文件创建好之后，需要将该文件路径配置到这里-->
+<!--        执行XxxMapper.xml 文件的路径-->
+<!--        resource 属性自动会从类的根路径下开始查找资源-->
+<!--        <mapper resource="CarMapper.xml"/>-->
+<!--        <mapper resource="com/CarMapper2.xml"/>-->
+
+<!--        url属性: 从绝对路径当中加载资源。-->
+<!--        语法格式：file:///绝对路径-->
+        <mapper url="file:///e:/CarMapper.xml"></mapper>
+    </mappers>
+
+</configuration>

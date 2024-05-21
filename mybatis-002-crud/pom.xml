@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ranbowsea</groupId>
-    <artifactId>mybatis-001-introduction</artifactId>
+    <groupId>com.rainbowsea</groupId>
+    <artifactId>mybatis-002-crud</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -16,20 +16,20 @@
 
 
     <dependencies>
-        <!--mybatis核心依赖-->
+<!--              mybatis依赖 -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>3.5.10</version>
         </dependency>
-        <!--mysql驱动依赖-->
+<!--    mysql驱动器-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.30</version>
         </dependency>
 
-<!--        junit 依赖-->
+<!--        引入 junit4 依赖-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -37,13 +37,14 @@
             <scope>test</scope>
         </dependency>
 
-<!--        引入 logback的依赖，这个日志框架实现了slf4j 规范-->
+        <!--        引入 logback的依赖，这个日志框架实现了slf4j 规范-->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.11</version>
         </dependency>
     </dependencies>
+
 
 
 
