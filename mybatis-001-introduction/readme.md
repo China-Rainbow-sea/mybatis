@@ -83,7 +83,7 @@ SqlSessionFactoryBuilder-->SqlSessionFactory-->SqlSession
 > 4.CarMapper.xml 文件的名字是固定的吗？CarMapper.xml 文件的路径是固定的吗？
 > 都不是固定的
 > <mapper resource="CarMapper.xml"> resource属性；这种方式是从类路径当中加载资源
-> <mapper url="file:///e:/CarMapper.xml"> url 属性；这种方式是从绝对路径当中加载资源
+> <mapper url="file:///e:/C8arMapper.xml"> url 属性；这种方式是从绝对路径当中加载资源
 
 > 5. 关于 mybatis 的事务管理机制（深度剖析）
 > 在mybatis-config.xml 文件中，可以通过以下的配置进行mybatis的事务管理
