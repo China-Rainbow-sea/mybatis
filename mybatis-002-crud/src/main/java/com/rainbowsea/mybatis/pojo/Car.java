@@ -48,6 +48,10 @@ public class Car {
         return carNum;
     }
 
+/*    public String getXyz() {
+        return carNum;
+    }*/
+
     public void setCarNum(String carNum) {
         this.carNum = carNum;
     }
