@@ -85,7 +85,7 @@ SqlSessionFactoryBuilder-->SqlSessionFactory-->SqlSession
 > <mapper resource="CarMapper.xml"> resource属性；这种方式是从类路径当中加载资源
 > <mapper url="file:///e:/C8arMapper.xml"> url 属性；这种方式是从绝对路径当中加载资源
 
-> 5. 关于 mybatis 的事务管理机制（深度剖析）
+> ````````5. 关于 mybatis 的事务管理机制（深度剖析）
 > 在mybatis-config.xml 文件中，可以通过以下的配置进行mybatis的事务管理
 > <transactionManager type="JDBC">
 > type的属性的值包括两个: 
@@ -120,7 +120,7 @@ SqlSessionFactoryBuilder-->SqlSessionFactory-->SqlSession
 >
 10.重点
 > 以后注意了，只要你的autoCommit是true，就表示没有开启事务，只有你
-> 的autoCommit 是false 的时候，就表示开启了事务。
+> 的autoCommit 是false 的时候，就表示开启了事务。````````
 
 7. 关于mybatis 集成日志组件，让我们调试起来更加方便。
 mybatis常见的集成的日志组件有哪些呢？
