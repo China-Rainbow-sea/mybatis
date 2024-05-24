@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class SqlSessionUtil {
     // 工具类的构造方法一般都是私有话化的
-    // 工具类中所有的方法都是静态的，直接次啊用雷曼即可调用，不需要 new 对象
+    // 工具类中所有的方法都是静态的，直接类名即可调用，不需要 new 对象
     // 为了防止new对象，构造方法私有化。
 
     private SqlSessionUtil() {

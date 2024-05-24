@@ -17,7 +17,7 @@ public class CarMapperTest {
 
         // 执行SQL语句
         // 正确的完整写法:namespace.id
-        List<Car> cars = sqlSession.selectList("rainbowseaaaaa.selectAll");
+        List<Car> cars = sqlSession.selectList("rainbowsea2.selectAll");
 
         // 遍历
         cars.forEach(car -> {
@@ -65,7 +65,7 @@ public class CarMapperTest {
     public void testUpdateById() {
         SqlSession sqlSession = SqlSessionUtil.openSession();
 
-        Car car = new Car(14L, "999", "凯美瑞", 30.3, "1999-11-10", "燃油车");
+        Car car = new Car(46L, "999", "凯美瑞", 30.3, "1999-11-10", "燃油车");
         // 执行SQL语句
         int count = sqlSession.update("updateById", car);
         System.out.println(count);
@@ -83,7 +83,7 @@ public class CarMapperTest {
         SqlSession sqlSession = SqlSessionUtil.openSession();
 
         // 执行SQL语句
-        sqlSession.delete("deleteById",4); // 如果只要一个值的时候，就不需要对应上的的 Object 类型了
+        sqlSession.delete("deleteById",44); // 如果只要一个值的时候，就不需要对应上的的 Object 类型了
         sqlSession.commit(); // 提交
         sqlSession.close(); // 关闭
     }
@@ -115,7 +115,7 @@ public class CarMapperTest {
         Map<String,Object> map = new HashMap<>();
 
         map.put("carNum","111");
-        map.put("bread","比亚迪汉");
+        map.put("brand","比亚迪汉");
         map.put("guiderPrice",10.0);
         map.put("produceTime","2020-11-11");
         map.put("carType","电车");

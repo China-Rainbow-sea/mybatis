@@ -5,15 +5,25 @@
 <!--namespace先随意写一个-->
 <mapper namespace="rainbowsea">
 
+	<select id="selectAll" resultType="com.rainbowsea.mybatis.pojo.Car">
+		select
+			id,car_num as carNum, brand, guide_price as guiderPrice,
+			produce_time as produceTime,
+			car_type as carType
+		from
+			t_car
+
+	</select>
+
 <!--	insert语句，id是这个条SQL语句的唯一标识，这个id就代表了这条SQL语句 -->
 <!--	<insert id="insertCar">-->
 <!--		insert into t_car(id,car_num,brand,guide_price,produce_time,car_type)-->
-<!--		values (null,#{carNum},#{brand},#{guiderPrice},#{produceTime},#{carType})-->
-<!--  map.get("fdsd") 找，结果找不到 = null-->
-<!--	</insert> -->
+<!--		values (null,#{k1},#{k2},#{k3},#{k4},#{k5})-->
+<!--&lt;!&ndash;  map.get("fdsd") 找，结果找不到 = null&ndash;&gt;-->
+<!--	</insert>-->
 
 <!--	 map.get("fdsd") 找，结果找不到 = null-->
-	<insert id="insertCar">
+	<insert id="insertCar"  parameterType="com.rainbowsea.mybatis.pojo.Car">
 		insert into t_car(id,car_num,brand,guide_price,produce_time,car_type)
 		values (null,#{carNum},#{brand},#{guiderPrice},#{produceTime},#{carType})
 	</insert>
@@ -33,6 +43,9 @@
 <!--		select * from t_car where id= #{id}-->
 <!--	</select>-->
 
+
+
+
 	<select id="selectById" resultType="com.rainbowsea.mybatis.pojo.Car">
 		select id,car_num as carNum, brand, guide_price as guiderPrice,
 		produce_time as produceTime,
@@ -41,13 +54,5 @@
 		where id= #{id}
 	</select>
 
-	<select id="selectAll" resultType="com.rainbowsea.mybatis.pojo.Car">
-		select
-		       id,car_num as carNum, brand, guide_price as guiderPrice,
-			   produce_time as produceTime,
-			   car_type as carType
-		from
-		       t_car
 
-	</select>
 </mapper>

@@ -3,7 +3,18 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace先随意写一个-->
-<mapper namespace="rainbowseaaaaa">
+<mapper namespace="rainbowsea2">
+	<select id="selectAll" resultType="com.rainbowsea.mybatis.pojo.Car">
+		select
+			id,car_num as carNum, brand, guide_price as guiderPrice,
+			produce_time as produceTime
+		from
+			t_car
+
+	</select>
+
+
+
 
 	<!--	insert语句，id是这个条SQL语句的唯一标识，这个id就代表了这条SQL语句 -->
 	<!--	<insert id="insertCar">-->
@@ -41,12 +52,5 @@
 		where id= #{id}
 	</select>
 
-	<select id="selectAll" resultType="com.rainbowsea.mybatis.pojo.Car">
-		select
-			id,car_num as carNum, brand, guide_price as guiderPrice,
-			produce_time as produceTime
-		from
-			t_car
 
-	</select>
 </mapper>
