@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+                <property name="username" value="root"/>
+                <property name="password" value="MySQL123"/>
+<!--                提醒：正常使用连接池的话，池中有很多的参数需要设置的，设置好参数，可以让连接池发挥的更好，事半功倍的效果-->
+<!--                具体连接池当中的参数如何配置呢？需要反复的根据当前业务情况进行测试-->
+<!--                PooolMaximumActiveConnections 连接池当中最多的正在使用的连接对象的数量上限，
+最多有多少个连接可以活动，默认值是10-->
+                <!--最大连接数，默认是10个-->
+                <property name="poolMaximumActiveConnections" value="10"/>
+<!--                每隔两秒打印日志，并且尝试获取连接对象-->
+                <property name="poolTimeToWait" value="2000"/>
+<!--                强行让某个连接空间，超时间的设置，等待10，简单的说就是（没有多余连接的时候，等待10秒，就会强制关闭其中的一个连接，给你用）-->
+                <property name="poolMaximumCheckoutTime" value="10000"/>
+<!--                   假设最多的连接数是10个
+                        最多空间的数量是：5个
+                        假设目前已经空闲5个，马上第6个要空闲了。
+                        假设第6个空闲下来了，此时连接池为了保证最多空闲的数量5个，会真正关闭多余的空闲的连接对象。
+
+-->
+<!--                最多的空闲数量-->
+                <property name="poolMaximumIdleConnections" value="5"/>
+
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="CarMapper.xml"/>
+    </mappers>
+</configuration>
