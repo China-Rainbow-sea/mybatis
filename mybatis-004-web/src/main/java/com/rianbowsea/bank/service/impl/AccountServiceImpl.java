@@ -39,8 +39,8 @@ public class AccountServiceImpl implements AccountService {
         count += accountDao.updateByActno(fromAct);
 
         // 模拟异常
-        //String s = null;
-        //s.toString();
+        String s = null;
+        s.toString();
 
         if(count !=2) {
             throw new TransferException("转账异常，未知原因");

@@ -40,7 +40,7 @@ public class AccountServlet extends HttpServlet {
         } catch (TransferException e) {
             response.sendRedirect(request.getContextPath()+"/error2.html");
             throw new RuntimeException(e);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             response.sendRedirect(request.getContextPath()+"/error2.html");
             throw new RuntimeException(e);
         }
