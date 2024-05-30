@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--        起别名-->
+        <typeAliases>
+<!--
+        type: 指定給哪个类型起别名
+        alias: 指定别名
+        注意：别名不区分大小写
+        <namespace = “”>接口，一定要为全限定类名(带有包名)，不可以用别名机制
+-->
+<!--            <typeAlias type="com.rainbowsea.mybatis.pojo.Car" alias="aaa"></typeAlias>-->
+<!--            <typeAlias type="com.rainbowsea.mybatis.pojo.Log" alias="bbb"></typeAlias>-->
+
+<!--            省略alias 属性之后，别名就是类的简名了，比如:com.rainbowsea.mybatis.pojo.Car 的别名就是 Car/CAR/cAR
+ 不区分大小写的。-->
+<!--            <typeAlias type="com.rainbowsea.mybatis.pojo.Car"></typeAlias>-->
+<!--            <typeAlias type="com.rainbowsea.mybatis.pojo.Log"></typeAlias>-->
+
+
+            <!--使用 <package>	还可以将这个包下的所有的类的全部自动起别名，别名就是简名，不区分大小写-->
+<!--            同时需要按照一定的顺序放置，放到指定的顺序当中去-->
+           <package name="com.rainbowsea.mybatis.pojo"/>
+        </typeAliases>
+    <environments default="mybatis">
+
+        <environment id="mybatis">
+            <!--            MANAGED 没有用第三框架管理的话，都是会被提交的，没有事务上的管理了。-->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+                <property name="username" value="root"/>
+                <property name="password" value="MySQL123"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+<!--        <mapper resource="CarMapper.xml"></mapper>-->
+<!--        <mapper resource="LogMapper.xml"></mapper>-->
+<!--        <mapper url="file:///d:/CarMapper.xml"></mapper>-->
+<!--        <mapper class="全限定接口名.带有包名，与对应的接口的路径一定要保持一致"></mapper>-->
+
+<!--        使用这种方式的前提：CarMapper.xml 文件的位置不能随便放
+        必须和CarMapper 接口路径一致，放在一起
+        XML文件的名字必须和接口名一致-->
+<!--        <mapper class="com.rainbowsea.mybatis.mapper.CarMapper"></mapper>-->
+<!--        <mapper class="com.rainbowsea.mybatis.mapper.LogMapper"></mapper>-->
+
+<!-- 这里也是可以使用 package 包名扫描，但是同样的：对应接口路径要一致，接口名一致-->
+        <package name="com.rainbowsea.mybatis.mapper"></package>
+    </mappers>
+</configuration>

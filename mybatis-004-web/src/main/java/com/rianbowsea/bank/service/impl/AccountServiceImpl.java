@@ -11,7 +11,15 @@ import org.apache.ibatis.session.SqlSession;
 
 public class AccountServiceImpl implements AccountService {
 
-    private AccountDao accountDao = new AccountDaoImpl();
+    //private AccountDao accountDao = new AccountDaoImpl();
+
+    // 在mybatis 当中，mybatis 提供了相关的机制，也可以动态为我们生成dao接口的实现类，（代理类：dao接口的代理）
+    // mybatis 当中实际上采用了代理模式，在内存当中生成dao接口的代理类，然后创建代理类的实例。
+    // 使用mybatis 的这种代理机制的前提：SqLMapper.xml 文件中的namespace必须是dao接口的全限定名称，
+    // id必须是dao接口中的方法。
+    // 同时需要注意：AccountDao.class 和 接受的值，是需要保持一致的。、
+    // 怎么用？代码怎么写？AccountDao accountDao = sqlSession.getMapper(AccountDao.class);
+    private AccountDao accountDao = SqlSessionUtil.openSession().getMapper(AccountDao.class);
 
     @Override
     public void transfer(String fromActno, String toActno, double money) throws MoneyNotEnoughException, TransferException {
