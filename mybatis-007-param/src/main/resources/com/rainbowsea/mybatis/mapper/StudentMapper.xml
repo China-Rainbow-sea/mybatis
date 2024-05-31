@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 一定要是：对应的接口的全限定类名-->
+<mapper namespace="com.rainbowsea.mybatis.mapper.StudentMapper">
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+<!--    parameterType 属性的作用：
+        告诉mybatis框架，我这个方法的参数类型是什么类型的
+        mybatis 框架自身带有类型自动推断的机制，所以大部分情况下 parameterType 属性都是可以省略不写的。
+        select * from t_student where id = ?
+        ps.setLong(1,1L)
+        ps.setString(1,"张三")
+        ps.setDate(1,new Date())
+        ps.setInt(1,100)
+        ...
+        mybatis 底层到底调用setXxx的哪个方法，取决于parameterType属性的值
+        注意: mybatis框架时间上内置了很多别名，可以参考开发手册
+        -->
+    <select id="selectById" resultType="Student" parameterType="java.lang.Long">
+
+        select id,name,age,height,birth,sex
+        from t_student
+        where id = #{id}
+    </select>
+
+<!--        mybatis 底层到底调用setXxx的哪个方法，取决于parameterType属性的值
+        注意: mybatis框架时间上内置了很多别名，可以参考开发手册
+        -->
+<!--    <select id="selectByName" resultType="Student" parameterType="String" >-->
+<!--        select id,name,age,height,birth,sex-->
+<!--        from t_student-->
+<!--        where name = #{name}-->
+<!--    </select>-->
+<!--    单个参数-->
+    <select id="selectByName" resultType="Student" >
+        select id,name,age,height,birth,sex
+        from t_student
+        where name = #{name,javaType=String, jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByBirth" resultType="Student">
+        select id,name,age,height,birth,sex
+        from t_student
+        where birth = #{birth}
+    </select>
+
+    <select id="selectBySex" resultType="Student">
+        select id,name,age,height,birth,sex
+        from t_student
+        where sex = #{sex}
+    </select>
+
+
+    <insert id="insertStudentByMap" parameterType="map">
+        insert into t_student (id,name,age,sex,birth,height)
+        values (null,#{姓名},#{年龄},#{性别},#{生日},#{身高});
+    </insert>
+
+    <insert id="insertStudentByPOJO" parameterType="Student">
+        insert into t_student (id,name,age,sex,birth,height)
+        values (null,#{name},#{age},#{sex},#{birth},#{height});
+    </insert>
+
+<!--    多个参数-->
+<!--    <select id="selectByNameAndSex" resultType="Student">-->
+<!--        select id,name,age,height,birth,sex-->
+<!--        from t_student-->
+<!--        where name = #{name} and sex = #{sex}-->
+<!--    </select>-->
+
+
+    <select id="selectByNameAndSex" resultType="Student">
+        select id,name,age,height,birth,sex
+        from t_student
+        where name = #{arg0} and sex = #{param2}
+    </select>
+<!--    where name = #{arg0} and sex = #{arg1}-->
+<!--    where name = #{param1} and sex = #{param2}-->
+<!--    注意低版本的mybatis中，使用的是：#{0}和#{1},以及#{2}...
+        高版本的mybatis中，使用的是:
+        #{arg0}
+        #{arg1}
+        #{arg2}
+
+        #{param1}
+        #{param2}
+        #{param3}
+
+
+-->
+<!--    使用 @Param 注解
+注意：使用了@Param注解之后，arg0和arg1失效了，
+而 param1和 param2 还可以用
+-->
+    <select id="selectByNameAndSex2" resultType="Student">
+        select id,name,age,height,birth,sex
+        from t_student
+        where name = #{name} and sex = #{sex}
+    </select>
+
+
+
+
+
+</mapper>

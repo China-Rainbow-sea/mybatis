@@ -80,4 +80,12 @@ public interface CarMapper {
      */
     List<Car> selectByBrandLike(String brand);
 
+
+    /**
+     * 插入 Car 信息，并且使用生成的主键值
+     * @param car
+     * @return
+     */
+    int insertCarUserGeneratedKey(Car car);
+
 }
