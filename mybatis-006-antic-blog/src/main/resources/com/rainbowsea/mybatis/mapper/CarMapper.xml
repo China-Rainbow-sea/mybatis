@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 一定要是：对应的接口的全限定类名-->
+<mapper namespace="com.rainbowsea.mybatis.mapper.CarMapper">
+    <!--
+	userGeneratedKeys = "true" 使用自动生成的主键值
+	keyProperty="id" 指定主键值赋值给对象的哪个属性，这个就表示将主键值给Car对象的 id属性。
+	注意：这个 keyProperty 指定的值，一定要和对应上的 pojo 对象类上的属性一致，不然，不行的
+	-->
+    <insert id="insertCarUserGeneratedKey" useGeneratedKeys="true" keyProperty="id">
+        insert into t_car
+        values (null, #{carNum}, #{brand}, #{guidePrice}, #{produceTime}, #{carType})
+    </insert>
+
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <delete id="deleteBath">
+        delete
+        from t_car
+        where id in (#{ids})
+    </delete>
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <!--    这样因为：数据表的字段名和我们定义POJO类的属性名不一致，要将二者保持一致，用 关键字 as 定义别名的方式保持一致-->
+    <select id="selectByBrandLike" resultType="com.rainbowsea.mybatis.pojo.Car">
+        select id,
+               car_num      as carNum,
+               brand,
+               guide_price  as guidePrice,
+               produce_time as produceTime,
+               car_type     as carType
+        from t_car
+        where brand like "%"#{brand}"%"
+    </select>
+
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <!--    这样因为：数据表的字段名和我们定义POJO类的属性名不一致，要将二者保持一致，用 关键字 as 定义别名的方式保持一致-->
+    <select id="selectAllByAscOrDesc" resultType="com.rainbowsea.mybatis.pojo.Car">
+        select id,
+               car_num      as carNum,
+               brand,
+               guide_price  as guidePrice,
+               produce_time as produceTime,
+               car_type     as carType
+        from t_car
+        order by produce_time #{ascOrDesc}
+    </select>
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <!--    这样因为：数据表的字段名和我们定义POJO类的属性名不一致，要将二者保持一致，用 关键字 as 定义别名的方式保持一致-->
+    <select id="selectByCarType" resultType="Car">
+        select id,
+               car_num      as carNum,
+               brand,
+               guide_price  as guidePrice,
+               produce_time as produceTime,
+               car_type     as carType
+        from t_car
+        where car_type = #{carType}
+    </select>
+
+
+</mapper>
