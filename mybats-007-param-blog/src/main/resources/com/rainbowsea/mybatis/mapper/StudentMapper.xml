@@ -3,16 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
+
+
+
 <!--namespace 一定要是：对应的接口的全限定类名-->
 <mapper namespace="com.rainbowsea.mybatis.mapper.StudentMapper">
     <!--    多个参数-->
-    <select id="selectByNameAndSex" resultType="Student">
+    <select id="selectByNameAndSex2" resultType="Student">
         select id,name,age,height,birth,sex
         from t_student
-        where name = #{arg0} and sex = #{param2}
+        where name = #{name} and sex = #{sex}
     </select>
     <!--    where name = #{arg0} and sex = #{arg1}-->
     <!--    where name = #{param1} and sex = #{param2}-->
+
+
+
 
 
 

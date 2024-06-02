@@ -34,7 +34,7 @@ public class TestStudentMapper {
         StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
         // mapper是代理对象
         // selectByNameAndSex是代理方法
-        List<Student> students = mapper.selectByNameAndSex("李华", '男');
+        List<Student> students = mapper.selectByNameAndSex2("李华", '男');
         students.forEach(student -> {
             System.out.println(student);
         });

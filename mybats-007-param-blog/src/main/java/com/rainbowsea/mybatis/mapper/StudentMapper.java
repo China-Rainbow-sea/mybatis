@@ -10,6 +10,29 @@ import java.util.Map;
 
 public interface StudentMapper {
 
+    /**
+     * 使用Param注解
+     * mybatis框架底层的实现原理
+     * @param name
+     * @param sex
+     * @return
+     */
+    List<Student> selectByNameAndSex2(@Param(value = "name") String name, @Param("sex") Character sex);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 根据 name 和 sex 查询 Student 信息
