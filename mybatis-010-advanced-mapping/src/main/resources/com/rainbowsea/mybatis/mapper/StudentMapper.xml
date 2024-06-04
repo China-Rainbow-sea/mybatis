@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 一定要是：对应的接口的全限定类名-->
+<mapper namespace="com.rainbowsea.mybatis.mapper.StudentMapper">
+
+    <!--    一对多 ，分布查询第二步-->
+    <select id="selectByCidsStep2" resultType="Student">
+        select sid, sname, cid
+        from t_stu
+        where cid = #{cid}
+    </select>
+
+
+    <!--
+            分布查询的优点:
+                第一：复用性增强，可以重复证明。（大步拆成N多个小碎布，每一个小碎步更加可以重复利用）
+                第二：采用这种分步查询，可以充分利用他们的延迟加载/懒加载机制
+
+             什么是延迟加载（懒加载），有什么用？
+             延迟加载的核心原理是：用的时候再执行查询语句，不用的时候不查询
+             作用：提高性能，尽可能的不查，或者尽可能的少查，来提高效率
+             在mybatis当中怎么开启延迟加载呢？
+                association标签之哦给你添加fetchType="lazy"
+              注意，默认情况下是没有开启延迟加载的，需要设置，fetchType="lazy"
+              这种在association标签中配置fetchType="lazy" 是局部的设置，只对当前association关联的sql语句起作用
+              fetchType="eager" 表示关闭局部的延迟加载
+              实际的开发中的模式：
+              把全局的延迟加载打开。
+              如果某一步不需要使用延迟加载，请设置fetchType="eager" 即可
+    -->
+    <!--    两条SQL语句，完成多对一的分布查询-->
+    <!--    这里是第一步，根据学生的id查询学生的所有信息，这些信息当中含有班级id(cid)-->
+    <!--    type 是Java中的类集合/数组除了Map，存储的元素类型《用全限定类名，启用了别名机制，用别名
+            column 数据库查询的字段名-->
+    <resultMap id="studentResulMapByStep" type="Student">
+        <id property="sid" column="sid"></id>
+        <result property="sname" column="sname"></result>
+        <!--    <association property="clazz(第一步查询的字段名（与第二步关联的字段）)" select="这里需要指定另外第二步SQL语句的ID（com.rainbowsea.mybatis.mapper
+        .ClazzMapper
+        .selectByIdStep2）"
+             column="cid 第二步SQL语句传的字段信息，查询"></association>-->
+        <!--        <association property="clazz" select="com.rainbowsea.mybatis.mapper.ClazzMapper.selectByIdStep2"-->
+        <!--                     column="cid" fetchType="lazy"></association>      <-->
+        <association property="clazz" select="com.rainbowsea.mybatis.mapper.ClazzMapper.selectByIdStep2"
+                     column="cid" fetchType="eager"></association>
+        <!--一条SQL语句一条 association-->
+
+    </resultMap>
+    <select id="selectByIdStep1" resultMap="studentResulMapByStep">
+        select sid, sname, cid
+        from t_stu
+        where sid = #{sid}
+    </select>
+
+    <resultMap id="studentResultMapAssociation" type="Student">
+        <id property="sid" column="sid"></id>
+        <result property="sname" column="sname"></result>
+        <!--
+                association 翻译为关联，一个student 对象关联一个Clazz对象
+                property，提供要映射的POJO类的属性名
+                javaType: 用来指定要映射的Java类（全限定类名，启用了别名可以用别名）
+                -->
+        <!--        <association property="clazz" javaType="com.rainbowsea.mybatis.pojo.Clazz"></association>
+        我们开启的别名机制-->
+        <association property="clazz" javaType="Clazz">
+            <id property="cid" column="cid"></id>
+            <result property="cname" column="cname"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectByIdAssociation" resultMap="studentResultMapAssociation">
+        select s.sid,
+               s.sname,
+               c.cid,
+               c.cname
+        from t_stu s
+                 left join t_clazz c on s.cid = c.cid
+        where s.sid = #{sid}
+    </select>
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <resultMap id="studentResultMap" type="Student">
+        <id property="sid" column="sid"></id>
+        <result property="sname" column="sname"></result>
+        <result property="clazz.cid" column="cid"></result>
+        <result property="clazz.cname" column="cname"></result>
+    </resultMap>
+    <select id="selectById" resultMap="studentResultMap">
+        select s.sid,
+               s.sname,
+               c.cid,
+               c.cname
+        from t_stu s
+                 left join t_clazz c on s.cid = c.cid
+        where s.sid = #{sid}
+    </select>
+</mapper>
