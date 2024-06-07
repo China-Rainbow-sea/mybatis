@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 一定要是：对应的接口的全限定类名-->
+<mapper namespace="com.rainbowsea.mybatis.mapper.CarMapper">
+
+
+
+    <!--    声明一个sql片段-->
+    <sql id="carColumnNameSql">
+        id
+        ,
+        car_num      as carNum,
+        brand,
+        guide_price  as guidePrice,
+        produce_time as produceTime,
+        car_type     as carType
+
+    </sql>
+    <select id="selectById2" resultType="Car">
+        SELECT
+        <!--将声明的sql片段包含进来-->
+        <include refid="carColumnNameSql"></include>
+        FROM `t_car`
+        where id=#{id}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <delete id="deleteByIds2">
+        delete from t_car where
+        <foreach collection="ids" separator="or" item="id">
+            id=#{id}
+        </foreach>
+    </delete>
+
+
+
+
+    <insert id="insertBath">
+        insert into t_car(id,car_num,brand,guide_price,produce_time,car_type) values
+        <foreach collection="cars" item="car" separator=",">
+            <!--需要注意的是：这里是封装到POJO实体类当中的，所定义的 item的变量后，所有POJO实体类的属性名，用 "."的方式-->
+            (null,#{car.carNum},#{car.brand},#{car.guidePrice},#{car.produceTime},#{car.carType})
+        </foreach>
+
+    </insert>
+
+    <!--
+           foreach 标签的属性:
+           collection :指定数组或者集合,在对应接口方法当中参数中定义的参数名
+           item:代表数组或集合中的元素
+           separator:循环之间的分隔符
+           open: foreach 循环拼接的所有sql语句的最前面以什么开始
+           close: foreach 循环拼接的所有sql语句的最前面以什么结束
+
+           collection="ids" 第一次写这个的时候报错了，错误西悉尼是：{array,arg0}
+           什么意思？
+               map.put("array",数组)
+               map.put("arg0",数组)
+   -->
+    <delete id="deleteByIds">
+        <!--  delete from t_car where id in(1,2,3)-->
+        <!-- delete from t_car where id in ( -->
+        <!--<foreach collection="ids" item="变量" separator=","></foreach>-->
+        <!-- <foreach collection="ids" item="aaa" separator=",">
+             #{aaa}
+         </foreach>-->
+
+        <!-- ) -->
+        delete from t_car where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <select id="selectByChoose" resultType="Car">
+        SELECT id, car_num, brand, guide_price, produce_time, car_type
+        FROM `t_car`
+        <!--只会执行其中的 一个满足条件的分支当中。-->
+        <where>
+            <choose>
+                <!-- 当其中的某个 when 满足条件，进入该 when 的SQL语句（拼接），并执行，后面其他的when 就不会进入了-->
+                <when test="brand != null and brand != ''">
+                    brand like "%"#{brand}"%"
+                </when>
+                <when test="guidePrice != null and guidePrice !=''">
+                    guide_price > #{guidePrice}
+                </when>
+                <otherwise>
+                    <!-- 当上面所有的 when 都没有满足条件的，则会进入这里的 otherwise的SQL语句（拼接），并执行-->
+                    car_type = #{carType}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+
+    <update id="updateSet">
+        update t_car
+        <!--set 标签会自动添加 set 关键字，不用我们自己再写了-->
+        <set>
+            <if test="carNum != null and carNum != ''">Car_num = #{carNum},</if>
+            <if test="brand != null and brand != ''">brand = #{brand},</if>
+            <if test="guidePrice != null and guidePrice != ''">guide_price = #{guidePrice},</if>
+            <if test="produceTime != null and produceTime != ''">produce_time = #{produceTime},</if>
+            <if test="carType != null and carType != ''">car_type = #{carType},</if>
+        </set>
+        where
+        id = #{id}
+
+    </update>
+
+
+    <select id="selectByMultiConditionWithTrim" resultType="Car">
+        SELECT id, car_num, brand, guide_price, produce_time, car_type
+        FROM `t_car`
+        <!--
+            prefix 加前缀
+            suffix: 加后缀
+            prefixOverriders: 删除前缀
+            suffixOverrides : 删除后缀
+
+        prefix="where" 表示是在 trim 标签所有内容的最前面添加 where ,suffix 同理
+        suffixOverrides="and|or" 把 trim 标签中所有内容的后缀 and 或 or 去掉
+        -->
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="brand != null and brand != ''">
+                brand like "%"#{brand}"%" and
+            </if>
+            <if test="guidePrice != null and guidePrice !=''">
+                guide_price > #{guidePrice} and
+            </if>
+            <if test="carType != null and carType !=''">
+                car_type = #{carType}
+            </if>
+        </trim>
+    </select>
+
+
+    <select id="selectByMultiConditionWithWhere" resultType="Car">
+        SELECT id, car_num, brand, guide_price, produce_time, car_type
+        FROM `t_car`
+        <!--where 标签是专门负责 where 子句动态生成的，不用我们自己再写 where 关键字了，自动生成-->
+        <!--自动去除某些条件前面多余的and或or。-->
+        <where>
+            <if test="brand != null and brand != ''">
+                <!--数据库表中的字段名-->
+                and brand like "%"#{brand}"%"
+            </if>
+            <if test="guidePrice != null and guidePrice !=''">
+                and guide_price >= #{guidePrice}
+            </if>
+            <if test="carType != null and carType != ''">
+                and car_type = #{carType}
+            </if>
+        </where>
+    </select>
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <select id="selectByMultiCondition" resultType="Car">
+        SELECT id, car_num, brand, guide_price, produce_time, car_type
+        FROM `t_car`
+        where 1=1
+        <!--
+            1.if标签中的test属性是必须的
+            2.if标签中test属性的值是false 或者 true
+            3.如果test是true ，则if标签中的sql语句就会拼接，反之则部分拼接
+            4.test属性中可以使用的是:
+                当使用了@Param注解，那么test中i给你要出现的是@Param注解指定的参数名，@Param("brand")
+                当没有使用@Param注解，那么test中要出现的是：param1,param2,param3 ; arg0,arg1...
+                当使用了POJO，那么test中出现的是POJO类的属性名
+            5.在mybatis的动态SQL当中，不能使用&&,只能使用 and ,or
+            6.注意单引号双引号交替使用
+        -->
+        <!--        <if test="表达式运行之后的结果是false,不会拼接"></if>-->
+        <if test="brand != null and brand != ''">
+            <!--数据库表中的字段名-->
+            and brand like "%"#{brand}"%"
+        </if>
+        <if test="guidePrice != null and guidePrice !=''">
+            and guide_price >= #{guidePrice}
+        </if>
+        <if test="carType != null and carType != ''">
+            and car_type = #{carType}
+        </if>
+    </select>
+
+</mapper>
