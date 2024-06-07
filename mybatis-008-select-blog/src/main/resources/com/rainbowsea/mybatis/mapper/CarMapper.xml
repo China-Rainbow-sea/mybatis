@@ -5,10 +5,74 @@
 
 <!--namespace 一定要是：对应的接口的全限定类名-->
 <mapper namespace="com.rainbowsea.mybatis.mapper.CarMapper">
+<!--    启用了 mybatis 全局设置，驼峰命名映射 -->
+    <select id="selectAllByMapUnderscoreToCamelCase" resultType="Car">
+        SELECT id,
+               car_num,
+               brand,
+               guide_price,
+               produce_time,
+               car_type
+        FROM `t_car`
+    </select>
+
+
+    <!--    1.专门定义一个结果映射，在这个结果映射当中指定数据库表的字段名和Java类的属性名的对应关系
+            2.type属性，用来指定POJO类的类名
+            3.id属性，指定resultMap的唯一标识，这个id将来要在select标签中使用-->
+    <!--    <resultMap id="carResultMap" type="com.rainbowsea.mybatis.pojo.Car">-->
+    <!--    也可以用别名-->
+    <resultMap id="carResultMap" type="Car">
+        <!--        如果数据表中有主键，一般都是有主键的，要不然不符合数据库设计第一范式-->
+        <!--        如果有主键，建议这里配置一个id的标签，注意：这不是必须的，但是官方的解释是：这样的配置可以让mybatis 提高效率-->
+        <id property="id" column="id"></id>
+        <!--        property 后面填写的值是：POJO类的属性名-->
+        <!--        column 后面填写数据库表查询显示的的字段名(用了别名的话，是别名)-->
+        <result property="carNum" column="car_num"></result>
+        <!--当属性名和数据库列名一致时，可以省略。但建议都写上。-->
+        <!--javaType用来指定属性类型。jdbcType用来指定列类型。一般可以省略。-->
+        <result property="brand" column="brand" javaType="string" jdbcType="VARCHAR"/>
+        <result property="guidePrice" column="guide_price"></result>
+        <result property="produceTime" column="produce_time"></result>
+        <result property="carType" column="car_type"></result>
+    </resultMap>
+
+
+    <!--    select标签的resultMap的属性，用来指定使用哪个结果映射，resultMap后面的值是resultMap的id-->
+    <!--resultMap属性的值必须和resultMap标签中id属性值一致。-->
+    <select id="selectAllByResultMap" resultMap="carResultMap">
+        SELECT id,
+               car_num,
+               brand,
+               guide_price,
+               produce_time,
+               car_type
+        FROM `t_car`
+    </select>
+
+
+    <!--    <select id="selectTotal" resultType="java.lang.Long"> ,也可以用别名-->
+    <select id="selectTotal" resultType="Long">
+        select count(1)
+        from t_car
+    </select>
+
 
     <!--    使用 as 别名，让POJO实体类当中的属性名与数据库的查询结果保持一致-->
+    <!--    注意：这里是用 Map集合进行接受的-->
+    <select id="selectAllRetMap" resultType="Map">
+        SELECT id,
+               car_num      as carNum,
+               brand,
+               guide_price  as guidePrice,
+               produce_time as produceTime,
+               car_type     as carType
+        FROM `t_car`
+    </select>
+
+
     <!--    这个 resultType 不是List 是 map ，注意：除了单个特殊的 Map -->
-   <!--    这个 resultType 不是List 是 map ，注意：除了单个特殊的 Map 集合的话（因为Map当中存在多个元素类型，无法断定用其中的那个存储的），其他的都是数组/集合当中存放的数据的元素类型-->
+    <!--    这个 resultType 不是List 是 map ，注意：除了单个特殊的 Map 集合的话（因为Map当中存在多个元素类型，无法断定用其中的那个存储的），其他的都是数组/集合当中存放的数据的元素类型-->
     <select id="selectAllRetListMap" resultType="map">
         SELECT id,
                car_num      as carNum,

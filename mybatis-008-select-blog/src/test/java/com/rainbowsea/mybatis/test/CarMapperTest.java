@@ -14,6 +14,57 @@ import java.util.Map;
 
 public class CarMapperTest {
 
+    @Test
+    public void testSelectAllByMapUnderscoreToCamelCase() throws IOException {
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(Resources.getResourceAsStream("mybatis-config.xml"), "mybatis");
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        CarMapper mapper = sqlSession.getMapper(CarMapper.class);
+        List<Car> cars = mapper.selectAllByMapUnderscoreToCamelCase();
+        cars.forEach(car -> {
+            System.out.println(car);
+        });
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void testSelectAllByResultMap() throws IOException {
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(Resources.getResourceAsStream("mybatis-config.xml"), "mybatis");
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        CarMapper mapper = sqlSession.getMapper(CarMapper.class);
+        List<Car> cars = mapper.selectAllByResultMap();
+        cars.forEach(car -> {
+            System.out.println(car);
+        });
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void testSelectTotal() throws IOException {
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(Resources.getResourceAsStream("mybatis-config.xml"), "mybatis");
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        CarMapper mapper = sqlSession.getMapper(CarMapper.class);
+        Long count = mapper.selectTotal();
+        System.out.println("总记录条数" + count);
+        sqlSession.close();
+
+    }
+
+    @Test
+    public void testSelectAllRetMap() throws IOException {
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(Resources.getResourceAsStream("mybatis-config.xml"), "mybatis");
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        CarMapper mapper = sqlSession.getMapper(CarMapper.class);
+        Map<Long, Map<String, Object>> cars = mapper.selectAllRetMap();
+        System.out.println(cars);
+        sqlSession.close();
+    }
+
 
     @Test
     public void testSelectAllRetListMap() throws IOException {
@@ -22,14 +73,13 @@ public class CarMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         CarMapper mapper = sqlSession.getMapper(CarMapper.class);
         List<Map<String, Object>> cars = mapper.selectAllRetListMap();
-        cars.forEach(car->{
+        cars.forEach(car -> {
             System.out.println(car);
         });
 
         sqlSession.close();
 
     }
-
 
 
     @Test

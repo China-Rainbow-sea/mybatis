@@ -8,6 +8,30 @@ import java.util.List;
 import java.util.Map;
 
 public interface CarMapper {
+
+
+    /**
+     * mybatis 全局设置，驼峰命名映射
+     * @return
+     */
+    List<Car> selectAllByMapUnderscoreToCamelCase();
+
+
+
+    /**
+     * 查询所有的Car信息，使用resultMap标签进行结果映射
+     * @return
+     */
+    List<Car> selectAllByResultMap();
+
+
+    /**
+     * 获取Car的总记录条数
+     * @return
+     */
+    Long selectTotal();
+
+
     /**
      * 查询所有的Car，返回一个Map集合
      * Map集合的key是每条记录的主键值
