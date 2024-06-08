@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 一定要是：对应的接口的全限定类名-->
+<mapper namespace="com.rainbowsea.mybatis.mapper.ClazzMapper">
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <select id="selectByIdStep2" resultType="Clazz">
+        select cid, cname
+        from t_clazz
+        where cid = #{cid}
+    </select>
+
+
+
+    <!--    分布查询第一步：根据班级的cid获取班级信息-->
+    <resultMap id="clazzResultMapStep" type="Clazz">
+        <id property="cid" column="cid"></id>
+        <result property="cname" column="cname"></result>
+        <collection property="stus"
+                    select="com.rainbowsea.mybatis.mapper.StudentMapper.selectByCidsStep2"
+                    column="cid">
+        </collection>
+    </resultMap>
+
+
+
+
+
+
+    <select id="selectByStep1" resultMap="clazzResultMapStep">
+        select cid, cname
+        from t_clazz
+        where cid = #{cid}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <resultMap id="clazzResultMap" type="Clazz">
+        <id property="cid" column="cid"></id>
+        <result property="cname" column="cname"></result>
+        <!--        -对多，这里是 collection ，collection 是集合的意思,定义集合/数组当中元素的映射信息（这里是Student 类型的映射）-->
+        <!--        ofType 属性用来指定集合当中的元素类型,全限定类名（启用别名用别名）-->
+        <!--        <collection property="stus(表示POJo类中的属性)" ofType="Student"></collection>-->
+        <collection property="stus" ofType="Student">
+            <id property="sid" column="sid"></id>
+            <result property="sname" column="sname"></result>
+        </collection>
+    </resultMap>
+
+    <select id="selectByCollection" resultMap="clazzResultMap">
+        select c.cid, c.cname, s.sid, s.sname
+        from t_clazz c
+                 left join t_stu s on c.cid = s.cid
+        where c.cid = #{cid}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
