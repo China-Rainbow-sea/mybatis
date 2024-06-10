@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 一定要是：对应的接口的全限定类名-->
+<mapper namespace="com.rainbowsea.mybatis.mapper.CarMapper">
+
+<!--
+        默认情况下，二级缓存机制是开启的
+        只需要在对应的SqlMapper.xml文件中添加以下标签，用来表示“我”使用该二级缓存
+-->
+    <cache></cache>
+
+
+    <!--	id 要是 namespace 对应接口上的方法名: -->
+    <select id="selectById" resultType="Car">
+        select id, car_num, brand, guide_price, produce_time, car_type
+        from t_car
+        where id = #{id}
+    </select>
+
+
+    <insert id="insertClazz">
+        insert into t_clazz values (#{cid},#{cname})
+    </insert>
+</mapper>
