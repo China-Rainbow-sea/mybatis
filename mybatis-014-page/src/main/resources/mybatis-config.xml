@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+<!--        启用驼峰命名映射-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+<!--       延迟加载的全局开关，默认值是 false 不开启 （简单的说就是：所有只要但凡带有分布的，都采用延迟加载）-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+
+
+
+    <!--    起别名-->
+    <typeAliases>
+        <!--  使用 <package>	还可以将这个包下的所有的类的全部自动起别名，别名就是简名，不区分大小写 -->
+        <package name="com.rainbowsea.mybatis.pojo"/>
+    </typeAliases>
+
+<!--    mybatis 分页的拦截器-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+
+
+    <environments default="mybatis">
+
+        <environment id="mybatis">
+            <!--            MANAGED 没有用第三框架管理的话，都是会被提交的，没有事务上的管理了 -->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+                <property name="username" value="root"/>
+                <property name="password" value="MySQL123"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- 这里也是可以使用 package 包名扫描，但是同样的：对应接口路径要一致，接口名一致-->
+        <package name="com.rainbowsea.mybatis.mapper"></package>
+    </mappers>
+</configuration>
