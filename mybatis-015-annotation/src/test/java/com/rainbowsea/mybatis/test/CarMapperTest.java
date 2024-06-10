@@ -36,7 +36,7 @@ public class CarMapperTest {
         CarMapper mapper = sqlSession.getMapper(CarMapper.class);
 
 
-        int count = mapper.deleteById(138L);
+        int count = mapper.deleteById(139L);
         System.out.println(count);
         sqlSession.commit();
         sqlSession.close();
@@ -51,7 +51,7 @@ public class CarMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         CarMapper mapper = sqlSession.getMapper(CarMapper.class);
 
-        Car car = new Car(138L,"666","丰田霸道2",new BigDecimal(32.00),"2020-11-11","燃油车");
+        Car car = new Car(139L,"666","丰田霸道2",new BigDecimal(32.00),"2020-11-11","燃油车");
         int count = mapper.update(car);
         System.out.println(count);
         sqlSession.commit();
