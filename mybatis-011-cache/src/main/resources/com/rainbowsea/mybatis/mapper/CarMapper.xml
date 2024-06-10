@@ -10,7 +10,7 @@
         默认情况下，二级缓存机制是开启的
         只需要在对应的SqlMapper.xml文件中添加以下标签，用来表示“我”使用该二级缓存
 -->
-    <cache></cache>
+    <cache  type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
 
 
     <!--	id 要是 namespace 对应接口上的方法名: -->
@@ -19,6 +19,7 @@
         from t_car
         where id = #{id}
     </select>
+
 
 
     <insert id="insertClazz">

@@ -13,6 +13,27 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class CarMapperTest {
+    @Test
+    public void testSelectById5() throws Exception {
+        // 这里只有一个SqlSessionFactory 对象，二级缓存对应的就是SqlSessionFactory
+        SqlSessionFactoryBuilder sqlSessionFactoryBuilder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBuilder.build(Resources.getResourceAsStream("mybatis-config.xml"), "mybatis");
+
+        SqlSession sqlSession1 = sqlSessionFactory.openSession();
+        CarMapper mapper1 = sqlSession1.getMapper(CarMapper.class);
+        Car car1 = mapper1.selectById(118L);
+        System.out.println(car1);
+
+        sqlSession1.close();
+
+        SqlSession sqlSession2 = sqlSessionFactory.openSession();
+        CarMapper mapper2 = sqlSession2.getMapper(CarMapper.class);
+        Car car2 = mapper2.selectById(118L);
+        System.out.println(car2);
+
+        sqlSession2.close();
+    }
+
 
     @Test
     public void testSelectById4() throws IOException {
@@ -33,7 +54,6 @@ public class CarMapperTest {
         sqlSession1.close();
 
 
-
         // 这行代码执行结束之后，实际上数据会缓存到一级缓存当中。（sqlSession2 是一级缓存）
         Car car1 = mapper2.selectById(118L);
         System.out.println(car1);
@@ -44,7 +64,6 @@ public class CarMapperTest {
         // 程序执行到这里的时候，会将sqlSession2这个一级缓存中的数据写入到二级缓存当中
         sqlSession2.close();
     }
-
 
 
     /**
@@ -72,7 +91,7 @@ public class CarMapperTest {
         //sqlSession.clearCache();
 // 在这里执行 insert或者 delete 或者 update 中的任意一个语句，并且和表没有关系
         CarMapper mapper2 = sqlSession.getMapper(CarMapper.class);
-        mapper2.insertClazz(new Clazz(2000,"高三三班"));
+        mapper2.insertClazz(new Clazz(2000, "高三三班"));
 
         CarMapper mapper1 = sqlSession.getMapper(CarMapper.class);
         Car car1 = mapper1.selectById(118L);
