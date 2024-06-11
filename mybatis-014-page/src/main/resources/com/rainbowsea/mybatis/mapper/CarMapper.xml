@@ -12,6 +12,10 @@
     </select>
 
 
+
+
+
+
     <!--	id 要是 namespace 对应接口上的方法名: -->
     <select id="selectByPage" resultType="Car">
         select id, car_num, brand, guide_price, produce_time, car_type

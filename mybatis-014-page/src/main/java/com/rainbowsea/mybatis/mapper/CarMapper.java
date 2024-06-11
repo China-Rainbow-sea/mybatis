@@ -10,6 +10,11 @@ public interface CarMapper {
 
     List<Car> selectAll();
 
+
+
+
+
+
     /**
      * 分页查询
      *

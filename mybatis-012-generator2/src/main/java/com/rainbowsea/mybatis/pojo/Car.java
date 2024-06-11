@@ -15,18 +15,6 @@ public class Car {
 
     private String carType;
 
-    public Car() {
-    }
-
-    public Car(Long id, String carNum, String brand, BigDecimal guidePrice, String produceTime, String carType) {
-        this.id = id;
-        this.carNum = carNum;
-        this.brand = brand;
-        this.guidePrice = guidePrice;
-        this.produceTime = produceTime;
-        this.carType = carType;
-    }
-
     @Override
     public String toString() {
         return "Car{" +

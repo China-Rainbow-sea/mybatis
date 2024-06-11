@@ -24,7 +24,7 @@ public class CarMapperTest {
         CarMapper mapper = sqlSession.getMapper(CarMapper.class);
 
         // 一定一定一定要注意，在执行DQL语句之前，开启分页功能
-        int pageNum = 0;
+        int pageNum = 2;
         int pageSize = 3;
 
         PageHelper.startPage(pageNum, pageSize);
@@ -36,7 +36,12 @@ public class CarMapperTest {
         PageInfo<Car> carPageInfo = new PageInfo<>();
         System.out.println(carPageInfo);
 
+        // 获取分页信息对象
+        PageInfo<Car> pageInfo = new PageInfo<>(cars, 5);
+        System.out.println(pageInfo);
+
         sqlSession.close();
+
 
         // PageInfo{pageNum=0, pageSize=0, size=0, startRow=0, endRow=0, total=0, pages=0, list=null,
         // prePage=0, nextPage=0, isFirstPage=false, isLastPage=false, hasPreviousPage=false, hasNextPage=false,
