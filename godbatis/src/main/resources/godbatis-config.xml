@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <environments default="mybatis">
+        <environment id="mybatis">
+            <!--            MANAGED 没有用第三框架管理的话，都是会被提交的，没有事务上的管理了。-->
+            <transactionManager type="JDBC"/>
+<!--            数据源是获取connection对象的 -->
+<!--            POOlED UNPOOLED  JNDI -->
+<!--            所有的数据源都要实现 JDK带的规范，javax.sql.DataSource-->
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+                <property name="username" value="root"/>
+                <property name="password" value="MySQL123"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="sqlMapper.xml"></mapper>
+    </mappers>
+</configuration>
