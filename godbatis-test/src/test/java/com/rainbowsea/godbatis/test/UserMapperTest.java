@@ -17,7 +17,7 @@ public class UserMapperTest {
 
 
         // 执行SQL insert
-        User user = new User("666", "张三", "20");
+        User user = new User("99999", "张三", "20");
         int count = sqlSession.insert("user.insert", user);
         sqlSession.commit();
         sqlSession.close();
